@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>休闲奢侈品与年轻男性劳动力供给 - 文献汇报</title>
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.16.9/katex.min.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fc;
+            --text-primary: #1a1a2e;
+            --text-secondary: #5c5c6d;
+            --accent: #003399;
+            --accent-light: #e8eef8;
+            --accent-orange: #ff6b35;
+            --accent-green: #34c759;
+            --accent-purple: #af52de;
+            --card-border: rgba(0, 0, 0, 0.08);
+            --font-display: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            --title-size: clamp(1.5rem, 4vw, 2.8rem);
+            --h2-size: clamp(1.2rem, 2.8vw, 2rem);
+            --h3-size: clamp(0.9rem, 1.6vw, 1.2rem);
+            --body-size: clamp(0.7rem, 1.1vw, 0.9rem);
+            --small-size: clamp(0.6rem, 0.8vw, 0.72rem);
+            --label-size: clamp(0.5rem, 0.7vw, 0.62rem);
+            --math-size: clamp(0.85rem, 1.3vw, 1.05rem);
+            --slide-padding: clamp(1rem, 3vw, 3rem);
+            --content-gap: clamp(0.5rem, 1.3vw, 1rem);
+            --element-gap: clamp(0.25rem, 0.7vw, 0.5rem);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --duration-normal: 0.8s;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background: var(--bg-primary); color: var(--text-primary); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+        .slide { width: 100vw; height: 100vh; height: 100dvh; overflow: hidden; scroll-snap-align: start; display: flex; flex-direction: column; position: relative; }
+        .slide-content { flex: 1; display: flex; flex-direction: column; justify-content: center; max-height: 100%; overflow: hidden; padding: var(--slide-padding); }
+        h1 { font-size: var(--title-size); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+        h2 { font-size: var(--h2-size); font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
+        h3 { font-size: var(--h3-size); font-weight: 600; }
+        p { font-size: var(--body-size); color: var(--text-secondary); line-height: 1.6; }
+        .label { font-size: var(--label-size); font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: var(--element-gap); }
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity var(--duration-normal) var(--ease-out-expo), transform var(--duration-normal) var(--ease-out-expo); }
+        .slide.visible .reveal { opacity: 1; transform: translateY(0); }
+        .reveal-stagger > * { opacity: 0; transform: translateY(12px); transition: opacity 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo); }
+        .slide.visible .reveal-stagger > *:nth-child(1) { transition-delay: 0.05s; opacity: 1; transform: translateY(0); }
+        .slide.visible .reveal-stagger > *:nth-child(2) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+        .slide.visible .reveal-stagger > *:nth-child(3) { transition-delay: 0.15s; opacity: 1; transform: translateY(0); }
+        .slide.visible .reveal-stagger > *:nth-child(4) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+        .slide.visible .reveal-stagger > *:nth-child(5) { transition-delay: 0.25s; opacity: 1; transform: translateY(0); }
+        .slide.visible .reveal-stagger > *:nth-child(6) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+        .reveal-scale { opacity: 0; transform: scale(0.95); transition: opacity var(--duration-normal) var(--ease-out-expo), transform var(--duration-normal) var(--ease-out-expo); }
+        .slide.visible .reveal-scale { opacity: 1; transform: scale(1); }
+        .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); width: 0%; z-index: 1000; transition: width 0.3s ease; }
+        .nav-dots { position: fixed; right: clamp(0.4rem, 1vw, 1rem); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 6px; z-index: 100; }
+        .nav-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--text-secondary); opacity: 0.3; cursor: pointer; transition: all 0.3s var(--ease-out-expo); border: none; }
+        .nav-dot:hover { opacity: 0.6; transform: scale(1.3); }
+        .nav-dot.active { opacity: 1; background: var(--accent); transform: scale(1.3); }
+        .title-slide { background: var(--bg-primary); justify-content: center; align-items: center; text-align: center; }
+        .title-slide .slide-content { align-items: center; max-width: min(90vw, 850px); }
+        .title-slide h1 { margin-bottom: var(--element-gap); }
+        .title-slide .subtitle { font-size: var(--h3-size); color: var(--text-secondary); font-weight: 400; margin-bottom: var(--content-gap); }
+        .title-slide .meta { font-size: var(--small-size); color: var(--text-secondary); line-height: 1.8; }
+        .title-slide .presenter { font-size: var(--body-size); color: var(--accent); font-weight: 500; margin-top: var(--content-gap); }
+        .title-slide .institution { font-size: var(--small-size); color: var(--text-secondary); margin-top: 0.3em; }
+        .title-logo { max-height: min(12vh, 80px); margin-bottom: var(--content-gap); object-fit: contain; }
+        .content-slide .slide-content { max-width: min(92vw, 1050px); margin: 0 auto; width: 100%; }
+        .content-slide h2 { margin-bottom: var(--content-gap); }
+        .math-block { background: var(--bg-secondary); border-radius: 10px; padding: clamp(0.5rem, 1vw, 0.9rem); margin: var(--element-gap) 0; text-align: center; overflow-x: auto; }
+        .math-block .katex { font-size: var(--math-size); }
+        .math-block .katex-display { margin: 0; }
+        .theorem-box { background: var(--accent-light); border-left: 3px solid var(--accent); padding: clamp(0.35rem, 0.7vw, 0.7rem); margin: var(--element-gap) 0; border-radius: 0 6px 6px 0; }
+        .theorem-box .label { color: var(--accent); margin-bottom: 0.15em; }
+        .assumption-box { background: var(--bg-secondary); border-radius: 10px; padding: clamp(0.5rem, 1vw, 0.9rem); margin: var(--element-gap) 0; }
+        .assumption-box h4 { font-size: var(--body-size); font-weight: 600; margin-bottom: var(--element-gap); }
+        .assumption-box p { font-size: var(--small-size); }
+        .hypothesis-box { background: linear-gradient(135deg, var(--accent-light) 0%, #eef2f9 100%); border-radius: 10px; padding: clamp(0.5rem, 1vw, 0.9rem); margin: var(--element-gap) 0; border: 1px solid rgba(0, 51, 153, 0.12); }
+        .hypothesis-box h4 { font-size: var(--body-size); font-weight: 600; color: var(--accent); margin-bottom: var(--element-gap); }
+        .hypothesis-box p { font-size: var(--small-size); color: var(--text-primary); }
+        .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: clamp(0.75rem, 2vw, 2rem); margin-top: var(--content-gap); align-items: start; }
+        .three-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: clamp(0.6rem, 1.3vw, 1.1rem); margin-top: var(--content-gap); }
+        .four-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); gap: clamp(0.4rem, 1vw, 0.8rem); margin-top: var(--content-gap); }
+        .chart-container { background: var(--bg-secondary); border-radius: 12px; padding: clamp(0.6rem, 1.3vw, 1.1rem); margin: var(--element-gap) 0; }
+        .chart-title { font-size: var(--small-size); font-weight: 600; color: var(--text-primary); margin-bottom: var(--element-gap); text-align: center; }
+        .bar-chart { display: flex; align-items: flex-end; justify-content: space-around; height: clamp(90px, 14vh, 140px); padding: 0 8px; gap: clamp(6px, 1.5vw, 16px); }
+        .bar-item { display: flex; flex-direction: column; align-items: center; flex: 1; max-width: 70px; }
+        .bar { width: 100%; max-width: 36px; background: var(--accent); border-radius: 4px 4px 0 0; transform-origin: bottom; transform: scaleY(0); transition: transform 0.8s var(--ease-out-expo); }
+        .slide.visible .bar { transform: scaleY(1); }
+        .bar.secondary { background: var(--accent-orange); transition-delay: 0.1s; }
+        .bar.tertiary { background: var(--accent-purple); transition-delay: 0.2s; }
+        .bar.quaternary { background: var(--accent-green); transition-delay: 0.3s; }
+        .bar-label { font-size: var(--label-size); color: var(--text-secondary); margin-top: 3px; text-align: center; }
+        .bar-value { font-size: var(--small-size); font-weight: 600; margin-bottom: 3px; }
+        .stacked-bar-chart { display: flex; align-items: stretch; height: clamp(70px, 10vh, 100px); gap: clamp(3px, 0.8vw, 8px); }
+        .stacked-bar-item { flex: 1; display: flex; flex-direction: column; border-radius: 6px; overflow: hidden; }
+        .stacked-segment { transition: flex 0.8s var(--ease-out-expo); }
+        .stacked-segment.work { background: var(--accent); }
+        .stacked-segment.tv { background: var(--accent-orange); }
+        .stacked-segment.game { background: var(--accent-purple); }
+        .stacked-segment.internet { background: var(--accent-green); }
+        .stacked-segment.other { background: #8e8e93; }
+        .slide.visible .stacked-segment { flex: 1; }
+        .line-chart { position: relative; height: clamp(100px, 16vh, 160px); border-left: 2px solid var(--text-secondary); border-bottom: 2px solid var(--text-secondary); margin-left: 35px; }
+        .line-chart svg { width: 100%; height: 100%; overflow: visible; }
+        .line-chart .grid-line { stroke: rgba(0,0,0,0.06); stroke-width: 1; }
+        .line-chart .axis-label { font-size: 9px; fill: var(--text-secondary); }
+        .line-chart .data-line { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1000; stroke-dashoffset: 1000; transition: stroke-dashoffset 1.5s var(--ease-out-expo); }
+        .slide.visible .data-line { stroke-dashoffset: 0; }
+        .line-chart .data-point { fill: var(--accent); opacity: 0; transition: opacity 0.3s; }
+        .slide.visible .data-point { opacity: 1; transition-delay: 1.2s; }
+        .line-chart .area-fill { fill: url(#areaGradient); opacity: 0; transition: opacity 0.5s; }
+        .slide.visible .area-fill { opacity: 0.15; transition-delay: 1s; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 100px), 1fr)); gap: clamp(0.6rem, 1.3vw, 1.3rem); margin-top: var(--content-gap); }
+        .stat-item { text-align: center; padding: clamp(0.4rem, 0.8vw, 0.6rem); }
+        .stat-number { font-size: clamp(1.3rem, 3.5vw, 2.2rem); font-weight: 700; letter-spacing: -0.03em; color: var(--text-primary); line-height: 1; margin-bottom: 0.1em; }
+        .stat-number.accent { color: var(--accent); }
+        .stat-number.orange { color: var(--accent-orange); }
+        .stat-label { font-size: var(--label-size); color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.04em; }
+        .flow-diagram { display: flex; align-items: center; justify-content: center; gap: clamp(0.4rem, 1.2vw, 1.2rem); flex-wrap: wrap; margin: var(--content-gap) 0; }
+        .flow-box { background: var(--bg-secondary); border-radius: 8px; padding: clamp(0.4rem, 0.8vw, 0.6rem) clamp(0.6rem, 1.2vw, 0.85rem); text-align: center; font-size: var(--small-size); font-weight: 500; }
+        .flow-box.highlight { background: var(--accent-light); border: 1px solid var(--accent); }
+        .flow-arrow { font-size: clamp(0.9rem, 1.8vw, 1.3rem); color: var(--text-secondary); }
+        .table-container { overflow-x: auto; margin-top: var(--content-gap); }
+        table { width: 100%; border-collapse: collapse; font-size: var(--small-size); }
+        th { text-align: left; padding: 0.35em 0.5em; background: var(--bg-secondary); font-weight: 600; border-bottom: 2px solid var(--card-border); }
+        td { padding: 0.35em 0.5em; border-bottom: 1px solid var(--card-border); }
+        .bullet-list { list-style: none; margin-top: var(--content-gap); }
+        .bullet-list li { font-size: var(--body-size); color: var(--text-primary); padding: var(--element-gap) 0; padding-left: 1.1em; position: relative; line-height: 1.4; }
+        .bullet-list li::before { content: ""; position: absolute; left: 0; top: calc(var(--element-gap) + 0.35em); width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+        .conclusion-slide { background: var(--bg-primary); color: var(--text-primary); }
+        .conclusion-slide h2 { color: var(--text-primary); }
+        .conclusion-slide .label { color: var(--accent); }
+        .conclusion-list { list-style: none; margin-top: var(--content-gap); }
+        .conclusion-list li { font-size: var(--body-size); color: var(--text-primary); padding: var(--element-gap) 0; border-bottom: 1px solid var(--card-border); display: flex; align-items: flex-start; gap: 0.5em; }
+        .conclusion-list li::before { content: "✓"; color: var(--accent); font-weight: 600; flex-shrink: 0; }
+        .quote-slide { background: var(--bg-secondary); justify-content: center; align-items: center; text-align: center; }
+        .quote-slide .slide-content { max-width: min(90vw, 700px); align-items: center; }
+        .quote-text { font-size: clamp(0.95rem, 2vw, 1.3rem); font-weight: 500; color: var(--text-primary); line-height: 1.6; font-style: italic; }
+        .quote-author { margin-top: var(--content-gap); font-size: var(--small-size); color: var(--text-secondary); }
+        .keyboard-hint { position: fixed; bottom: clamp(0.4rem, 1vw, 0.8rem); left: 50%; transform: translateX(-50%); font-size: var(--label-size); color: var(--text-secondary); opacity: 0.4; display: flex; align-items: center; gap: 0.25em; }
+        .key { display: inline-flex; align-items: center; justify-content: center; min-width: 16px; height: 16px; padding: 0 2px; background: var(--bg-secondary); border: 1px solid var(--card-border); border-radius: 3px; font-size: 8px; }
+        [contenteditable] { outline: none; border-radius: 3px; transition: background 0.2s; cursor: text; }
+        [contenteditable]:hover { background: var(--accent-light); }
+        [contenteditable]:focus { background: var(--accent-light); }
+        .edit-active [contenteditable]:hover, .edit-active [contenteditable]:focus { background: transparent; }
+        .edit-hotzone { position: fixed; top: 0; left: 0; width: 80px; height: 80px; z-index: 10000; cursor: pointer; }
+        .edit-toggle { position: fixed; top: clamp(0.4rem, 0.8vw, 0.8rem); left: clamp(0.4rem, 0.8vw, 0.8rem); width: 34px; height: 34px; border-radius: 50%; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--card-border); cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; z-index: 10001; display: flex; align-items: center; justify-content: center; font-size: 13px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .edit-toggle.show, .edit-toggle.active { opacity: 1; pointer-events: auto; }
+        .edit-toggle:hover { transform: scale(1.1); }
+        .edit-banner { position: fixed; top: 0; left: 0; right: 0; padding: 7px; background: var(--bg-primary); color: var(--text-primary); text-align: center; font-size: var(--small-size); z-index: 9999; opacity: 0; pointer-events: none; transform: translateY(-100%); transition: all 0.3s; border-bottom: 1px solid var(--card-border); }
+        .edit-banner.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .edit-banner button { margin-left: 0.6rem; padding: 2px 7px; background: var(--accent); color: white; border: none; border-radius: 3px; cursor: pointer; font-size: var(--small-size); }
+        .doi-link { color: var(--accent); text-decoration: none; font-size: var(--small-size); }
+        .doi-link:hover { text-decoration: underline; }
+        .legend-item { display: flex; align-items: center; gap: 5px; font-size: var(--small-size); }
+        .legend-dot { width: 7px; height: 7px; border-radius: 50%; }
+        @media (max-height: 700px) { :root { --slide-padding: clamp(0.6rem, 2vw, 1.5rem); --content-gap: clamp(0.35rem, 1vw, 0.7rem); --title-size: clamp(1.2rem, 3vw, 2rem); } }
+        @media (max-height: 600px) { :root { --slide-padding: clamp(0.4rem, 1.5vw, 1rem); --title-size: clamp(1rem, 2.5vw, 1.5rem); } .nav-dots, .keyboard-hint { display: none; } }
+        @media (max-width: 600px) { .nav-dots { display: none; } }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; } html { scroll-behavior: auto; } }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    <nav class="nav-dots"></nav>
+    <div class="edit-banner">编辑模式已开启 — 点击文字即可修改<button id="saveBtn">保存</button></div>
+    <div class="edit-hotzone"></div>
+    <button class="edit-toggle" id="editToggle">✏️</button>
+
+    <!-- SLIDE 1: TITLE -->
+    <section class="slide title-slide">
+        <div class="slide-content">
+            <img src="assets/logo.png" alt="暨南大学经济学院" class="title-logo reveal">
+            <p class="label reveal">文献汇报</p>
+            <h1 class="reveal" contenteditable="true">休闲奢侈品与年轻男性劳动力供给</h1>
+            <p class="subtitle reveal" contenteditable="true">Leisure Luxuries and the Labor Supply of Young Men</p>
+            <p class="meta reveal" contenteditable="true">
+                Mark Aguiar, Erik Hurst, Jonathan A. Parker<br>
+                <em>Quarterly Journal of Economics, 2007, Vol. 122, No. 2, pp. 709-774</em><br>
+                <a class="doi-link" href="https://doi.org/10.1111/j.1468-2354.2007.00436.x" target="_blank">DOI: 10.1111/j.1468-2354.2007.00436.x</a>
+            </p>
+            <p class="presenter reveal">汇报人：刘明杰</p>
+            <p class="institution reveal">暨南大学 经济学院</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 2: RESEARCH QUESTION -->
+    <section class="slide content-slide">
+        <div class="slide-content">
+            <p class="label reveal">一、研究问题</p>
+            <h2 class="reveal" contenteditable="true">经济谜题：劳动时间为何持续下降？</h2>
+            <p class="reveal" contenteditable="true">
+                1965-2003年间，美国18-50岁男性的周均工作小时数从约46小时下降至约38小时，降幅达17%。
+                这一现象与标准劳动经济学模型的预测相悖。
+            </p>
+            <div class="chart-container reveal">
+                <div class="chart-title" contenteditable="true">图1：年轻男性周均工作小时数 (1965-2003)</div>
+                <div class="line-chart">
+                    <svg viewBox="0 0 400 130" preserveAspectRatio="none">
+                        <defs><linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--accent)" stop-opacity="0.3"/><stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>
+                        <line class="grid-line" x1="0" y1="32.5" x2="400" y2="32.5"/>
+                        <line class="grid-line" x1="0" y1="65" x2="400" y2="65"/>
+                        <line class="grid-line" x1="0" y1="97.5" x2="400" y2="97.5"/>
+                        <text class="axis-label" x="-3" y="36" text-anchor="end">46h</text>
+                        <text class="axis-label" x="-3" y="68" text-anchor="end">38h</text>
+                        <text class="axis-label" x="-3" y="100" text-anchor="end">30h</text>
+                        <text class="axis-label" x="40" y="120" text-anchor="middle">1965</text>
+                        <text class="axis-label" x="140" y="120" text-anchor="middle">1975</text>
+                        <text class="axis-label" x="240" y="120" text-anchor="middle">1985</text>
+                        <text class="axis-label" x="340" y="120" text-anchor="middle">2003</text>
+                        <path class="area-fill" d="M0,18 L80,22 L160,38 L240,52 L320,78 L400,105 L400,130 L0,130 Z"/>
+                        <path class="data-line" d="M0,18 L80,22 L160,38 L240,52 L320,78 L400,105"/>
+                        <circle class="data-point" cx="0" cy="18" r="4"/>
+                        <circle class="data-point" cx="80" cy="22" r="4"/>
+                        <circle class="data-point" cx="160" cy="38" r="4"/>
+                        <circle class="data-point" cx="240" cy="52" r="4"/>
+                        <circle class="data-point" cx="320" cy="78" r="4"/>
+                        <circle class="data-point" cx="400" cy="105" r="4"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="stats-grid reveal-stagger">
+                <div class="stat-item"><div class="stat-number" contenteditable="true">46h</div><div class="stat-label">1965年周均工时</div></div>
+                <div class="stat-item"><div class="stat-number orange" contenteditable="true">→</div><div class="stat-label">下降</div></div>
+                <div class="stat-item"><div class="stat-number accent" contenteditable="true">38h</div><div class="stat-label">2003年周均工时</div></div>
+                <div class="stat-item"><div class="stat-number" contenteditable="true">-17%</div><div class="stat-label">累计降幅</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 3: STANDARD THEORY -->
+    <section class="slide content-slide">
+        <div class="slide-content">
+            <p class="label reveal">二、理论背景</p>
+            <h2 class="reveal" contenteditable="true">标准劳动-休闲替代模型</h2>
+            <div class="two-col">
+                <div>
+                    <div class="math-block reveal" id="utility-max"></div>
+                    <div class="theorem-box reveal"><p class="label">一阶条件</p><div class="math-block" id="foc" style="text-align: left; padding: 0.4em;"></div></div>
+                </div>
+                <div class="reveal-scale"><div class="assumption-box"><h4 contenteditable="true">收入效应 vs 替代效应</h4><p contenteditable="true">当实际工资 w 上升时：<br><br><strong>替代效应：</strong>闲暇变得"更贵" → 工作更多<br><br><strong>收入效应：</strong>实际收入增加 → 想要更多闲暇<br><br>标准预测：两者大致抵消 → 劳动时间稳定</p></div></div>
+            </div>
+            <div class="theorem-box reveal" style="margin-top: var(--content-gap);"><p class="label">实证困惑</p><p contenteditable="true">1965-2003年实际工资增长1.5倍，但劳动时间下降17%。标准模型预测与现实严重不符，需要新理论解释。</p></div>
+        </div>
+    </section>
+
+    <!-- SLIDE 4: LEISURE LUXURIES -->
+    <section class="slide content-slide">
+        <div class="slide-content">
+            <p class="label reveal">三、核心概念</p>
+            <h2 class="reveal" contenteditable="true">"休闲奢侈品"的定义</h2>
+            <div class="hypothesis-box reveal"><h4 contenteditable="true">定义：休闲奢侈品 (Leisure Luxuries)</h4><p contenteditable="true">具有以下特征的消费品：①主要用途是休闲娱乐 &nbsp;②收入弹性 > 1 &nbsp;③技术进步导致价格大幅下降 &nbsp;④曾经只有高收入群体才能负担</p></div>
+            <div class="two-col">
+                <div class="reveal-stagger"><div class="assumption-box"><h4 contenteditable="true">典型例子</h4><p contenteditable="true">• 电子游戏及游戏主机<br>• 有线电视/HBO<br>• 互联网接入服务<br>• 录像带/DVD租赁<br>• 体育观赛门票</p></div></div>
+                <div class="reveal-scale">
+                    <div class="chart-container"><div class="chart-title" contenteditable="true">图2：娱乐电子产品价格指数 (1980=100)</div><div class="bar-chart"><div class="bar-item"><div class="bar-value" contenteditable="true">100</div><div class="bar" style="height: 100px;"></div><div class="bar-label" contenteditable="true">1980</div></div><div class="bar-item"><div class="bar-value" contenteditable="true">50</div><div class="bar secondary" style="height: 50px;"></div><div class="bar-label" contenteditable="true">1990</div></div><div class="bar-item"><div class="bar-value" contenteditable="true">15</div><div class="bar tertiary" style="height: 25px;"></div><div class="bar-label" contenteditable="true">2000</div></div><div class="bar-item"><div class="bar-value" contenteditable="true">2</div><div class="bar quaternary" style="height: 15px;"></div><div class="bar-label" contenteditable="true">2003</div></div></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 5: THEORETICAL MODEL -->
+    <section class="slide content-slide">
+        <div class="slide-content">
+            <p class="label reveal">四、理论模型</p>
+            <h2 class="reveal" contenteditable="true">扩展的劳动-休闲选择模型</h2>
+            <div class="math-block reveal" id="extended-model"></div>
+            <div class="two-col">
+                <div class="assumption-box reveal"><h4 contenteditable="true">新增变量</h4><p contenteditable="true">L<sub>s</sub> = 休闲奢侈品消费<br>p<sub>s</sub> = 休闲奢侈品价格指数<br><br><strong>关键区别：</strong>闲暇 L 分为"普通闲暇"和"奢侈闲暇"</p></div>
+                <div class="assumption-box reveal"><h4 contenteditable="true">价格效应机制</h4><div class="flow-diagram"><div class="flow-box" contenteditable="true">p<sub>s</sub> ↓</div><span class="flow-arrow">→</span><div class="flow-box highlight" contenteditable="true">相对价格优势</div><span class="flow-arrow">→</span><div class="flow-box" contenteditable="true">消费↑</div><span class="flow-arrow">→</span><div class="flow-box highlight" contenteditable="true">h ↓</div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 6: HYPOTHESES -->
+    <section class="slide content-slide">
+        <div class="slide-content">
+            <p class="label reveal">五、研究假设</p>
+            <h2 class="reveal" contenteditable="true">三大核心假设</h2>
+            <div class="three-col reveal-stagger">
+                <div class="hypothesis-box"><h4 contenteditable="true">H1：价格效应</h4><p contenteditable="true">休闲奢侈品价格下降越多，劳动时间减少越多</p><div class="math-block" id="h1-eq" style="margin-top: 0.5em;"></div></div>
+                <div class="hypothesis-box"><h4 contenteditable="true">H2：收入效应</h4><p contenteditable="true">价格下降带来的购买力提升会减少劳动供给</p><div class="math-block" id="h2-eq" style="margin-top: 0.5em;"></div></div>
+                <div class="hypothesis-box"><h4 contenteditable="true">H3：年龄异质性</h4><p contenteditable="true">年轻人对价格变化更敏感</p><div class="math-block" id="h3-eq" style="margin-top: 0.5em;"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 7: DATA -->
+    <section class="slide content-slide">
+        <div class="slide-content">
+            <p class="label reveal">六、数据来源</p>
+            <h2 class="reveal" contenteditable="true">消费者支出调查（CES）数据</h2>
+            <div class="two-col">
+                <div class="reveal-stagger"><div class="assumption-box"><h4 contenteditable="true">样本选择</h4><ul class="bullet-list" style="margin-top: 0.4em;"><li contenteditable="true">数据来源：BLS 1965-2003年CES</li><li contenteditable="true">年龄范围：18-50岁男性</li><li contenteditable="true">排除：全日制学生、退休人员、自雇者、农业工作者</li><li contenteditable="true">最终样本：约2000-3000人/年</li></ul></div></div>
+                <div class="reveal-scale"><div class="assumption-box"><h4 contenteditable="true">变量定义</h4><div class="table-container" style="margin-top: 0.4em;"><table><tr><th>类型</th><th>变量</th></tr><tr><td contenteditable="true"><strong>因变量</strong></td><td contenteditable="true">周均工作小时数 h</td></tr><tr><td contenteditable="true"><strong>核心自变量</strong></td><td contenteditable="true">ln(p<sub>s</sub>) 休闲奢侈品价格</td></tr><tr><td contenteditable="true"><strong>控制变量</strong></td><td contenteditable="true">ln(w), ln(V), 年龄, 教育, 婚姻</td></tr></table></div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 8: PRICE INDEX -->
+    <section class="slide content-slide">
+        <div class="slide-content">
+            <p class="label reveal">七、价格指数构建</p>
+            <h2 class="reveal" contenteditable="true">娱乐商品价格指数 (EPI)</h2>
+            <div class="math-block reveal" id="epi-formula"></div>
+            <div class="chart-container reveal"><div class="chart-title" contenteditable="true">图3：休闲奢侈品价格指数演变 (1965=100)</div><div class="bar-chart"><div class="bar-item"><div class="bar-value" contenteditable="true">100</div><div class="bar" style="height: 100px;"></div><div class="bar-label" contenteditable="true">1965</div></div><div class="bar-item"><div class="bar-value" contenteditable="true">80</div><div class="bar secondary" style="height: 80px;"></div><div class="bar-label" contenteditable="true">1975</div></div><div class="bar-item"><div class="bar-value" contenteditable="true">50</div><div class="bar tertiary" style="height: 50px;"></div><div class="bar-label" contenteditable="true">1985</div></div><div class="bar-item"><div class="bar-value" contenteditable="true">20</div><div class="bar quaternary" style="height: 25px;"></div><div class="bar-label" contenteditable="true">1995</div></div><div class="bar-item"><div class="bar-value" contenteditable="true">10</div><div class="bar" style="height: 18px;"></div><div class="bar-label" contenteditable="true">2003</div></div></div></div>
+            <div class="stats-grid reveal-stagger"><div class="stat-item"><div class="stat-number accent" contenteditable="true">-98%</div><div class="stat-label">电子游戏价格</div></div><div class="stat-item"><div class="stat-number orange" contenteditable="true">-60%</div><div class="stat-label">有线电视相对价格</div></div><div class="stat-item"><div class="stat-number" contenteditable="true">-90%</div><div class="stat-label">娱乐电子产品整体</div></div></div>
+        </div>
+    </section>
+
+    <!-- SLIDE 9: EMPIRICAL STRATEGY -->
+    <section class="slide content-slide">
+        <div class="slide-content">
+            <p class="label reveal">八、实证策略</p>
+            <h2 class="reveal" contenteditable="true">两阶段最小二乘法（2SLS）</h2>
+            <div class="two-col">
+                <div class="reveal-stagger"><div class="theorem-box"><p class="label">内生性问题</p><p contenteditable="true">休闲奢侈品消费 L 与劳动时间 h 可能互为因果：<br>→ 消费者可能同时选择少工作多娱乐<br>→ OLS估计有偏，需要工具变量法</p></div><div class="math-block" id="2sls-eq" style="margin-top: var(--content-gap);"></div></div>
+                <div class="reveal-scale"><div class="assumption-box"><h4 contenteditable="true">工具变量选择</h4><p contenteditable="true">Z = 娱乐电子行业技术进步指数<br><br><strong>排他性约束：</strong><br>技术进步 → 影响价格 → 影响消费<br>但不通过其他渠道直接影响劳动供给</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 10: MAIN RESULTS -->
+    <section class="slide content-slide">
+        <div class="slide-content">
+            <p class="label reveal">九、主要结果</p>
+            <h2 class="reveal" contenteditable="true">回归分析结果</h2>
+            <div class="table-container reveal"><table><thead><tr><th>变量</th><th>系数 β</th><th>标准误</th><th>显著性</th></tr></thead><tbody><tr><td contenteditable="true">ln(休闲奢侈品价格)</td><td contenteditable="true">0.12</td><td contenteditable="true">(0.03)</td><td contenteditable="true">***</td></tr><tr><td contenteditable="true">ln(实际工资)</td><td contenteditable="true">-0.08</td><td contenteditable="true">(0.05)</td><td contenteditable="true"></td></tr><tr><td contenteditable="true">ln(非劳动收入)</td><td contenteditable="true">-0.15</td><td contenteditable="true">(0.04)</td><td contenteditable="true">***</td></tr><tr><td contenteditable="true">年龄</td><td contenteditable="true">0.32</td><td contenteditable="true">(0.08)</td><td contenteditable="true">***</td></tr><tr><td contenteditable="true">教育年限</td><td contenteditable="true">-0.05</td><td contenteditable="true">(0.02)</td><td contenteditable="true">**</td></tr></tbody></table></div>
+            <div class="theorem-box reveal" style="margin-top: var(--content-gap);"><p class="label">结果解读</p><p contenteditable="true"><strong>价格效应：</strong>ln(p<sub>s</sub>)系数为0.12，意味着价格每下降10%，周均劳动时间减少1.2小时<br><strong>统计显著性：</strong>*** 表示1%水平显著，核心假设H1得到支持</p></div>
+        </div>
+    </section>
+
+    <!-- SLIDE 11: ELASTICITY -->
+    <section class="slide content-slide">
+        <div class="slide-content">
+            <p class="label reveal">十、弹性分析</p>
+            <h2 class="reveal" contenteditable="true">劳动供给价格弹性估计</h2>
+            <div class="math-block reveal" id="elasticity-formula"></div>
+            <div class="chart-container reveal"><div class="chart-title" contenteditable="true">图4：分年龄段劳动供给价格弹性</div><div class="bar-chart"><div class="bar-item"><div class="bar-value" contenteditable="true">ε = -0.18</div><div class="bar" style="height: 72px;"></div><div class="bar-label" contenteditable="true">18-30岁</div></div><div class="bar-item"><div class="bar-value" contenteditable="true">ε = -0.08</div><div class="bar secondary" style="height: 32px;"></div><div class="bar-label" contenteditable="true">31-50岁</div></div><div class="bar-item"><div class="bar-value" contenteditable="true">2.25x</div><div class="bar tertiary" style="height: 60px;"></div><div class="bar-label" contenteditable="true">弹性比值</div></div></div></div>
+            <div class="theorem-box reveal"><p class="label">假设检验</p><p contenteditable="true"><strong>H3得到支持：</strong>年轻男性的价格弹性（绝对值）是年长男性的2.25倍</p></div>
+        </div>
+    </section>
+
+    <!-- SLIDE 12: TIME ALLOCATION -->
+    <section class="slide content-slide">
+        <div class="slide-content">
+            <p class="label reveal">十一、时间分配</p>
+            <h2 class="reveal" contenteditable="true">工作时间 vs 休闲时间演变</h2>
+            <div class="chart-container reveal">
+                <div class="chart-title" contenteditable="true">图5：年轻男性周均时间分配变化 (1965→2003)</div>
+                <div class="stacked-bar-chart"><div class="stacked-bar-item"><div class="stacked-segment work" style="flex: 46;"></div><div class="stacked-segment tv" style="flex: 8;"></div><div class="stacked-segment game" style="flex: 0.5;"></div><div class="stacked-segment internet" style="flex: 0;"></div><div class="stacked-segment other" style="flex: 5.5;"></div><div style="font-size: var(--label-size); margin-top: 3px;" contenteditable="true">1965</div></div><div class="stacked-bar-item"><div class="stacked-segment work" style="flex: 42;"></div><div class="stacked-segment tv" style="flex: 12;"></div><div class="stacked-segment game" style="flex: 2;"></div><div class="stacked-segment internet" style="flex: 0;"></div><div class="stacked-segment other" style="flex: 4;"></div><div style="font-size: var(--label-size); margin-top: 3px;" contenteditable="true">1980</div></div><div class="stacked-bar-item"><div class="stacked-segment work" style="flex: 40;"></div><div class="stacked-segment tv" style="flex: 14;"></div><div class="stacked-segment game" style="flex: 4;"></div><div class="stacked-segment internet" style="flex: 2;"></div><div class="stacked-segment other" style="flex: 3;"></div><div style="font-size: var(--label-size); margin-top: 3px;" contenteditable="true">1995</div></div><div class="stacked-bar-item"><div class="stacked-segment work" style="flex: 38;"></div><div class="stacked-segment tv" style="flex: 16;"></div><div class="stacked-segment game" style="flex: 5;"></div><div class="stacked-segment internet" style="flex: 6;"></div><div class="stacked-segment other" style="flex: 3;"></div><div style="font-size: var(--label-size); margin-top: 3px;" contenteditable="true">2003</div></div></div>
+                <div style="display: flex; justify-content: center; gap: 0.8rem; margin-top: 0.4rem; flex-wrap: wrap;"><div class="legend-item"><div class="legend-dot" style="background: var(--accent);"></div><span contenteditable="true">工作</span></div><div class="legend-item"><div class="legend-dot" style="background: var(--accent-orange);"></div><span contenteditable="true">电视</span></div><div class="legend-item"><div class="legend-dot" style="background: var(--accent-purple);"></div><span contenteditable="true">电子游戏</span></div><div class="legend-item"><div class="legend-dot" style="background: var(--accent-green);"></div><span contenteditable="true">互联网</span></div><div class="legend-item"><div class="legend-dot" style="background: #8e8e93;"></div><span contenteditable="true">其他</span></div></div>
+            </div>
+            <div class="stats-grid reveal-stagger" style="margin-top: var(--content-gap);"><div class="stat-item"><div class="stat-number" contenteditable="true">-8h</div><div class="stat-label">周均工时减少</div></div><div class="stat-item"><div class="stat-number accent" contenteditable="true">+8h</div><div class="stat-label">屏幕时间增加</div></div><div class="stat-item"><div class="stat-number orange" contenteditable="true">85%</div><div class="stat-label">时间被吸收</div></div></div>
+        </div>
+    </section>
+
+    <!-- SLIDE 13: MECHANISM -->
+    <section class="slide content-slide">
+        <div class="slide-content">
+            <p class="label reveal">十二、机制分析</p>
+            <h2 class="reveal" contenteditable="true">价格→消费→劳动供给 传导路径</h2>
+            <div class="math-block reveal" id="mediation-formula"></div>
+            <div class="flow-diagram reveal"><div class="flow-box" contenteditable="true">价格 p<sub>s</sub> ↓</div><span class="flow-arrow">→</span><div class="flow-box highlight" contenteditable="true">消费 L ↑</div><span class="flow-arrow">→</span><div class="flow-box" contenteditable="true">劳动 h ↓</div></div>
+            <div class="two-col reveal-stagger" style="margin-top: var(--content-gap);"><div class="assumption-box"><h4 contenteditable="true">替代渠道</h4><p contenteditable="true">休闲奢侈品相对价格下降 → "奢侈闲暇"性价比凸显 → 用休闲替代工作</p></div><div class="assumption-box"><h4 contenteditable="true">收入渠道</h4><p contenteditable="true">实际购买力提升 → 同等支出获得更多休闲 → 财富效应减少工作动力</p></div></div>
+        </div>
+    </section>
+
+    <!-- SLIDE 14: ROBUSTNESS -->
+    <section class="slide content-slide">
+        <div class="slide-content">
+            <p class="label reveal">十三、稳健性检验</p>
+            <h2 class="reveal" contenteditable="true">多重验证确保结论可靠</h2>
+            <div class="three-col reveal-stagger"><div class="assumption-box"><h4 contenteditable="true">IV替换检验</h4><p contenteditable="true">使用不同技术进步代理指标<br>系数稳定在0.10-0.14</p></div><div class="assumption-box"><h4 contenteditable="true">样本分割</h4><p contenteditable="true">按收入/教育/地区分组<br>主要结论不变</p></div><div class="assumption-box"><h4 contenteditable="true">时间窗口</h4><p contenteditable="true">分时段回归<br>趋势一致</p></div></div>
+            <div class="assumption-box reveal" style="margin-top: var(--content-gap);"><h4 contenteditable="true">反事实检验</h4><div class="flow-diagram"><div class="flow-box" contenteditable="true">假设：价格保持1965年水平</div><span class="flow-arrow">→</span><div class="flow-box highlight" contenteditable="true">预测2003年工时：44h</div><span class="flow-arrow">→</span><div class="flow-box" contenteditable="true">实际：38h</div><span class="flow-arrow">→</span><div class="flow-box highlight" contenteditable="true">差距6h由价格解释</div></div></div>
+        </div>
+    </section>
+
+    <!-- SLIDE 15: LIMITATIONS -->
+    <section class="slide content-slide">
+        <div class="slide-content">
+            <p class="label reveal">十四、研究局限</p>
+            <h2 class="reveal" contenteditable="true">研究的四项局限性</h2>
+            <div class="four-col reveal-stagger"><div class="hypothesis-box"><h4 contenteditable="true">1. 数据局限</h4><p contenteditable="true">CES仅记录支出，无时间日记；无法精确测量每类活动实际时间</p></div><div class="hypothesis-box"><h4 contenteditable="true">2. 内生性</h4><p contenteditable="true">工具变量排他性约束无法完全验证；可能存在遗漏变量偏误</p></div><div class="hypothesis-box"><h4 contenteditable="true">3. 因果识别</h4><p contenteditable="true">价格与消费变化可能受共同偏好变化驱动</p></div><div class="hypothesis-box"><h4 contenteditable="true">4. 外推性</h4><p contenteditable="true">仅限美国年轻男性；结论可能不适用女性或其他文化</p></div></div>
+        </div>
+    </section>
+
+    <!-- SLIDE 16: CONTRIBUTION -->
+    <section class="slide content-slide">
+        <div class="slide-content">
+            <p class="label reveal">十五、学术贡献</p>
+            <h2 class="reveal" contenteditable="true">研究的理论与实践意义</h2>
+            <div class="three-col reveal-stagger"><div class="assumption-box"><h4 contenteditable="true">理论贡献</h4><ul class="bullet-list" style="margin-top: 0.4em;"><li contenteditable="true">将"商品价格"引入劳动供给框架</li><li contenteditable="true">拓展Beckerian时间分配理论</li><li contenteditable="true">为劳动-休闲替代提供微观基础</li></ul></div><div class="assumption-box"><h4 contenteditable="true">政策启示</h4><ul class="bullet-list" style="margin-top: 0.4em;"><li contenteditable="true">技术进步提升全社会福利</li><li contenteditable="true">休闲产业政策影响劳动力供给</li><li contenteditable="true">重新审视"工作伦理"与休闲</li></ul></div><div class="assumption-box"><h4 contenteditable="true">方法贡献</h4><ul class="bullet-list" style="margin-top: 0.4em;"><li contenteditable="true">娱乐价格指数构建方法</li><li contenteditable="true">工具变量在消费-劳动模型应用</li><li contenteditable="true">中介效应分析框架</li></ul></div></div>
+        </div>
+    </section>
+
+    <!-- SLIDE 17: CONCLUSION -->
+    <section class="slide conclusion-slide">
+        <div class="slide-content">
+            <p class="label reveal">结论</p>
+            <h2 class="reveal" contenteditable="true">研究的主要结论</h2>
+            <ul class="conclusion-list reveal-stagger"><li contenteditable="true"><strong>H1成立：</strong>休闲奢侈品价格指数每下降10%，周均劳动时间减少约1.2小时（弹性≈0.12）</li><li contenteditable="true"><strong>H2成立：</strong>价格下降通过替代效应和收入效应双重渠道减少劳动供给</li><li contenteditable="true"><strong>H3成立：</strong>年轻男性（18-30岁）弹性为-0.18，是年长男性的2.25倍</li><li contenteditable="true"><strong>机制验证：</strong>85%的新增休闲时间来自屏幕时间（电视+游戏+互联网）</li><li contenteditable="true"><strong>福利解读：</strong>劳动时间下降是技术进步带来的"休闲红利"，反映真实生活水平提升</li></ul>
+        </div>
+    </section>
+
+    <!-- SLIDE 18: QUOTE -->
+    <section class="slide quote-slide">
+        <div class="slide-content">
+            <p class="quote-text reveal" contenteditable="true">"年轻男性并非在'懒惰'，而是在用新获得的财富购买一种曾经只有精英才能享受的休闲生活方式。"</p>
+            <p class="quote-author reveal" contenteditable="true">— Aguiar, Hurst & Parker (2007)</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 19: REFERENCES -->
+    <section class="slide content-slide">
+        <div class="slide-content">
+            <p class="label reveal">参考文献</p>
+            <h2 class="reveal" contenteditable="true">主要文献</h2>
+            <div class="assumption-box reveal" style="font-size: var(--small-size);"><p contenteditable="true" style="margin-bottom: var(--content-gap);"><strong>Aguiar, M., Hurst, E., & Parker, J. A. (2007).</strong><br>Leisure Luxuries and the Labor Supply of Young Men.<br><em>Quarterly Journal of Economics, 122</em>(2), 709-774.<br><a class="doi-link" href="https://doi.org/10.1111/j.1468-2354.2007.00436.x" target="_blank">DOI: 10.1111/j.1468-2354.2007.00436.x</a></p><p contenteditable="true" style="margin-bottom: var(--content-gap);"><strong>Becker, G. S. (1965).</strong><br>A Theory of the Allocation of Time.<br><em>Economic Journal, 75</em>(299), 493-517.<br><a class="doi-link" href="https://doi.org/10.2307/2228949" target="_blank">DOI: 10.2307/2228949</a></p><p contenteditable="true"><strong>Heckman, J. J. (1974).</strong><br>Life Cycle Consumption and Labor Supply.<br><em>American Economic Review, 64</em>(2), 187-194.<br><a class="doi-link" href="https://doi.org/10.7551/mitpress/2405.003.0009" target="_blank">DOI: 10.7551/mitpress/2405.003.0009</a></p></div>
+        </div>
+    </section>
+
+    <!-- SLIDE 20: THANK YOU -->
+    <section class="slide title-slide">
+        <div class="slide-content">
+            <img src="assets/logo.png" alt="暨南大学经济学院" class="title-logo reveal">
+            <h1 class="reveal" contenteditable="true">感谢聆听</h1>
+            <p class="subtitle reveal" contenteditable="true">欢迎提问与讨论</p>
+            <p class="presenter reveal">汇报人：刘明杰</p>
+            <p class="institution reveal">暨南大学 经济学院</p>
+        </div>
+    </section>
+
+    <div class="keyboard-hint"><span class="key">↑</span><span class="key">↓</span> 或 <span class="key">Space</span> 翻页</div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Initialize KaTeX formulas
+            try {
+                document.getElementById('utility-max').innerHTML = "\\(\\max_{c,h,L} \; U(c, L) \\quad \\text{s.t.} \\quad p \\cdot c = w \\cdot h + V\\)";
+                document.getElementById('foc').innerHTML = "\\(\\frac{w}{p} = \\frac{\\partial U / \\partial L}{\\partial U / \\partial c} \\)";
+                document.getElementById('extended-model').innerHTML = "\\(\\max_{c, h, L, L_s} \; U(c, L, L_s) \\quad \\text{s.t.} \\quad p_c \\cdot c + p_s \\cdot L_s = w \\cdot h + V\\)";
+                document.getElementById('h1-eq').innerHTML = "\\(\\frac{\\partial h}{\\partial p_s} > 0\\)";
+                document.getElementById('h2-eq').innerHTML = "\\(\\frac{\\partial h}{\\partial V} < 0\\)";
+                document.getElementById('h3-eq').innerHTML = "\\(|\\varepsilon_{young}| > |\\varepsilon_{old}|\\)";
+                document.getElementById('epi-formula').innerHTML = "\\(EPI_t = \\sum_i w_{i,0} \\cdot \\frac{p_{i,t}}{p_{i,0}}\\)";
+                document.getElementById('2sls-eq').innerHTML = "\\(\\text{第一阶段：} L_{it} = \\alpha + \\beta \\cdot Z_{it} + \\gamma \\cdot X_{it} + \\delta_t + \\varepsilon_{it}\\)";
+                document.getElementById('elasticity-formula').innerHTML = "\\(\\varepsilon = \\frac{\\partial h / h}{\\partial p_s / p_s} = \\frac{\\partial h}{\\partial p_s} \\cdot \\frac{p_s}{h}\\)";
+                document.getElementById('mediation-formula').innerHTML = "\\(\\text{总效应} = \\text{直接效应} + \\beta_1 \\times \\beta_2 \; (\\text{间接效应})\\)";
+                renderMathInElement(document.body, { delimiters: [{left: "\\(", right: "\\)", display: false}], throwOnError: false });
+            } catch (e) {
+                console.error("KaTeX initialization error:", e);
+            }
+
+            // Slide Presentation Controller
+            class SlidePresentation {
+                constructor() {
+                    this.slides = document.querySelectorAll(".slide");
+                    this.currentSlide = 0;
+                    this.isEditMode = false;
+                    this.progressBar = document.querySelector(".progress-bar");
+                    this.navDotsContainer = document.querySelector(".nav-dots");
+                    this.hotzone = document.querySelector(".edit-hotzone");
+                    this.editToggle = document.getElementById("editToggle");
+                    this.editBanner = document.querySelector(".edit-banner");
+                    this.saveBtn = document.getElementById("saveBtn");
+                    this.init();
+                }
+                init() {
+                    this.setupIntersectionObserver();
+                    this.setupKeyboardNav();
+                    this.setupTouchNav();
+                    this.setupProgressBar();
+                    this.setupNavDots();
+                    this.setupEditMode();
+                    setTimeout(() => {
+                        this.slides[0].classList.add("visible");
+                        this.updateNavDots();
+                        this.updateProgress();
+                    }, 100);
+                }
+                setupIntersectionObserver() {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add("visible");
+                                const index = Array.from(this.slides).indexOf(entry.target);
+                                this.currentSlide = index;
+                                this.updateNavDots();
+                                this.updateProgress();
+                            }
+                        });
+                    }, { threshold: 0.5 });
+                    this.slides.forEach(slide => observer.observe(slide));
+                }
+                setupKeyboardNav() {
+                    document.addEventListener("keydown", (e) => {
+                        if (e.target.getAttribute("contenteditable")) return;
+                        switch(e.key) {
+                            case "ArrowDown": case "ArrowRight": case " ": case "PageDown":
+                                e.preventDefault(); this.nextSlide(); break;
+                            case "ArrowUp": case "ArrowLeft": case "PageUp":
+                                e.preventDefault(); this.prevSlide(); break;
+                        }
+                    });
+                }
+                setupTouchNav() {
+                    let startY = 0;
+                    document.addEventListener("touchstart", (e) => { startY = e.touches[0].clientY; }, { passive: true });
+                    document.addEventListener("touchend", (e) => {
+                        const diffY = startY - e.changedTouches[0].clientY;
+                        if (Math.abs(diffY) > 50 && diffY > 0) this.nextSlide();
+                        else if (Math.abs(diffY) > 50 && diffY < 0) this.prevSlide();
+                    }, { passive: true });
+                }
+                updateProgress() { this.progressBar.style.width = ((this.currentSlide + 1) / this.slides.length * 100) + "%"; }
+                setupNavDots() {
+                    this.navDotsContainer.innerHTML = "";
+                    this.slides.forEach((_, index) => {
+                        const dot = document.createElement("button");
+                        dot.className = "nav-dot";
+                        dot.setAttribute("aria-label", `Slide ${index + 1}`);
+                        dot.addEventListener("click", () => this.goToSlide(index));
+                        this.navDotsContainer.appendChild(dot);
+                    });
+                    this.updateNavDots();
+                }
+                updateNavDots() { this.navDotsContainer.querySelectorAll(".nav-dot").forEach((dot, index) => { dot.classList.toggle("active", index === this.currentSlide); }); }
+                nextSlide() { if (this.currentSlide < this.slides.length - 1) this.goToSlide(this.currentSlide + 1); }
+                prevSlide() { if (this.currentSlide > 0) this.goToSlide(this.currentSlide - 1); }
+                goToSlide(index) { this.slides[index].scrollIntoView({ behavior: "smooth" }); this.currentSlide = index; this.updateNavDots(); this.updateProgress(); }
+                setupEditMode() {
+                    let hideTimeout = null;
+                    const showToggle = () => { clearTimeout(hideTimeout); this.editToggle.classList.add("show"); };
+                    const hideToggle = () => { hideTimeout = setTimeout(() => { if (!this.isEditMode) this.editToggle.classList.remove("show"); }, 400); };
+                    this.hotzone.addEventListener("mouseenter", showToggle);
+                    this.hotzone.addEventListener("mouseleave", hideToggle);
+                    this.editToggle.addEventListener("mouseenter", showToggle);
+                    this.editToggle.addEventListener("mouseleave", hideToggle);
+                    this.hotzone.addEventListener("click", () => this.toggleEditMode());
+                    this.editToggle.addEventListener("click", () => this.toggleEditMode());
+                    this.saveBtn.addEventListener("click", () => this.saveFile());
+                    document.addEventListener("keydown", (e) => { if ((e.ctrlKey || e.metaKey) && e.key === "s") { e.preventDefault(); this.saveFile(); } });
+                }
+                toggleEditMode() {
+                    this.isEditMode = !this.isEditMode;
+                    document.body.classList.toggle("edit-active", this.isEditMode);
+                    this.editToggle.classList.toggle("active", this.isEditMode);
+                    this.editBanner.classList.toggle("active", this.isEditMode);
+                    document.querySelectorAll("[contenteditable]").forEach(el => { if (this.isEditMode) el.setAttribute("contenteditable", "true"); else el.removeAttribute("contenteditable"); });
+                }
+                saveFile() {
+                    const editableEls = Array.from(document.querySelectorAll("[contenteditable]"));
+                    editableEls.forEach(el => el.removeAttribute("contenteditable"));
+                    document.body.classList.remove("edit-active");
+                    this.editToggle.classList.remove("active", "show");
+                    this.editBanner.classList.remove("active", "show");
+                    const html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+                    document.body.classList.add("edit-active");
+                    editableEls.forEach(el => el.setAttribute("contenteditable", "true"));
+                    this.editToggle.classList.add("active");
+                    const blob = new Blob([html], { type: "text/html" });
+                    const a = document.createElement("a");
+                    a.href = URL.createObjectURL(blob);
+                    a.download = "休闲奢侈品与劳动力供给_学术版.html";
+                    a.click();
+                    URL.revokeObjectURL(a.href);
+                    const ind = document.createElement("div");
+                    ind.style.cssText = "position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--bg-primary);color:var(--text-primary);padding:1rem 2rem;border-radius:8px;font-size:0.875rem;z-index:10002;border:1px solid var(--card-border);";
+                    ind.textContent = "已保存！";
+                    document.body.appendChild(ind);
+                    setTimeout(() => ind.remove(), 2000);
+                }
+            }
+            new SlidePresentation();
+        });
+    </script>
+</body>
+</html>
